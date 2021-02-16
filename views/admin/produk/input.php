@@ -56,7 +56,7 @@
 												</div>
 												<div class="modal-body">
 													<p class="small">Create a new row using this form, make sure you fill them all</p>
-													<form method="POST" action="insert">
+													<form method="POST" action="insertproduk">
 														<div class="row">
 															<div class="col-sm-12">
 																<div class="form-group form-group-default">
@@ -90,18 +90,31 @@
 											<thead>
 												<tr>
                                                 <th>ID</th>
-													<th>Name</th>
-													<th>Email</th>
-													<th>Password</th>
+													<th>Nama Produk</th>
+                                                    <th>Author</th>
+                                                    <th>Gambar</th>
+													<th>Kategori</th>
+													<th>Harga</th>
+                                                    <th>Diskon</th>
+                                                    <th>Potongan Harga</th>
+                                                    <th>Promosi</th>
+                                                    <th>Deskripsi</th>
 													<th style="width: 10%">Action</th>
 												</tr>
 											</thead>
 											<tbody>
+                                            {{range .}}
 												<tr>
-                                                    <td></td>
-													<td></td>
-													<td></td>
-													<td></td>
+                                                    <td>{{.Id_produk}}</td>
+                                                    <td>{{.Nama_produk}}</td>
+                                                    <td>{{.Id_user}}</td>
+													<td>{{.Gambar}}</td>
+													<td>{{.Kategori}}</td>
+                                                    <td>{{.Harga}}</td>
+													<td>{{.Diskon}}</td>
+                                                    <td>{{.Potongan_harga}}</td>
+													<td>{{.Promosi}}</td>
+													<td>{{.Deskripsi}}</td>
 													<td>
 														<div class="form-button-action">
 															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task">
@@ -113,6 +126,7 @@
 														</div>
 													</td>
 												</tr>
+                                                {{end}}
 											</tbody>
 										</table>
 									</div>

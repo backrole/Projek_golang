@@ -17,18 +17,6 @@ type User struct {
 	Password string
 }
 
-type Produk struct {
-	Id_produk      int
-	Id_user        int
-	Nama_produk    string
-	Kategori       string
-	Harga          int
-	Diskon         int
-	Potongan_harga int
-	Promosi        string
-	Deskripsi      string
-}
-
 func dbc() {
 	db, e := config.MySQL()
 
@@ -116,12 +104,43 @@ func produk(w http.ResponseWriter, r *http.Request) {
 }
 
 func inputproduk(w http.ResponseWriter, r *http.Request) {
+	db, e := config.MySQL()
+
+	if e != nil {
+		log.Fatal(e)
+	}
+
+	selDB, er := db.Query("SELECT * FROM Produk ORDER BY id_produk DESC")
+	if er != nil {
+		panic(er.Error())
+	}
+	emp := Produk{}
+	res := []Produk{}
+	for selDB.Next() {
+		var id_produk, id_user, harga, diskon, potongan_harga int
+		var nama_produk, gambar, kategori, promosi, deskripsi string
+		er = selDB.Scan(&id_produk, &id_user, &nama_produk, &gambar, &kategori, &harga, &potongan_harga, &diskon, &promosi, &deskripsi)
+		if er != nil {
+			panic(er.Error())
+		}
+		emp.Id_user = id_user
+		emp.Id_produk = id_produk
+		emp.Nama_produk = nama_produk
+		emp.Gambar = gambar
+		emp.Kategori = kategori
+		emp.Harga = harga
+		emp.Potongan_harga = potongan_harga
+		emp.Diskon = diskon
+		emp.Promosi = promosi
+		emp.Deskripsi = deskripsi
+		res = append(res, emp)
+	}
 	var tmpl = template.Must(template.ParseFiles(
 		"views/admin/produk/input.php",
 		"views/admin/layout/_app.php",
 		"views/admin/layout/_foapp.php",
 	))
-	tmpl.ExecuteTemplate(w, "input", "")
+	tmpl.ExecuteTemplate(w, "input", res)
 }
 
 func admin(w http.ResponseWriter, r *http.Request) {
@@ -201,6 +220,43 @@ func insert(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 	http.Redirect(w, r, "/user", 301)
+}
+
+type Produk struct {
+	Id_produk      int
+	Id_user        int
+	Nama_produk    string
+	Gambar         string
+	Kategori       string
+	Harga          int
+	Diskon         int
+	Potongan_harga int
+	Promosi        string
+	Deskripsi      string
+}
+
+func insertproduk(w http.ResponseWriter, r *http.Request) {
+	db, e := config.MySQL()
+	if e != nil {
+		log.Fatal(e)
+	}
+	if r.Method == "POST" {
+		nama_produk := r.FormValue("nama_produk")
+		gambar := r.FormValue("gambar")
+		kategori := r.FormValue("kategori")
+		harga := r.FormValue("harga")
+		diskon := r.FormValue("diskon")
+		potongan := r.FormValue("potongan_harga")
+		promosi := r.FormValue("promosi")
+		deskripsi := r.FormValue("deskripsi")
+		insForm, err := db.Prepare("INSERT INTO Produk(nama_produk, gambar, kategori, harga, diskon, potongan_harga, promosi, deskripsi) VALUES(?,?,?,?,?,?,?)")
+		if err != nil {
+			panic(err.Error())
+		}
+		insForm.Exec(nama_produk, gambar, kategori, harga, diskon, potongan, promosi, deskripsi)
+	}
+	defer db.Close()
+	http.Redirect(w, r, "/input-produk", 301)
 }
 
 func main() {
