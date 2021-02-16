@@ -342,6 +342,22 @@
 							<h4 class="text-section">Components</h4>
 						</li>
 						<li class="nav-item">
+							<a data-toggle="collapse" href="#produk">
+								<i class="fas fa-layer-group"></i>
+								<p>Produk</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="produk">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="/input-produk">
+											<span class="sub-item">Input produk</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
 							<a data-toggle="collapse" href="#base">
 								<i class="fas fa-layer-group"></i>
 								<p>User</p>

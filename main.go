@@ -115,6 +115,15 @@ func produk(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "index", "")
 }
 
+func inputproduk(w http.ResponseWriter, r *http.Request) {
+	var tmpl = template.Must(template.ParseFiles(
+		"views/admin/produk/input.php",
+		"views/admin/layout/_app.php",
+		"views/admin/layout/_foapp.php",
+	))
+	tmpl.ExecuteTemplate(w, "input", "")
+}
+
 func admin(w http.ResponseWriter, r *http.Request) {
 	var tmpl = template.Must(template.ParseFiles(
 		"views/admin/index.php",
@@ -203,6 +212,7 @@ func main() {
 	http.HandleFunc("/user", user)
 	http.HandleFunc("/delete", delete)
 	http.HandleFunc("/insert", insert)
+	http.HandleFunc("/input-produk", inputproduk)
 
 	fmt.Println("server started at localhost:800")
 	http.ListenAndServe(":800", nil)
