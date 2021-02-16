@@ -93,7 +93,7 @@
 											<tbody>
                                                 {{range .}}
 												<tr>
-                                                    <td>{{ .Id }}</td>
+                                                    <td>{{ .Id_user }}</td>
 													<td>{{ .Nama }}</td>
 													<td>{{ .Email }}</td>
 													<td>{{ .Password }}</td>
@@ -103,7 +103,7 @@
 																<i class="fa fa-edit"></i>
 															</button>
 															<button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove">
-																<a href="/delete?id={{.Id}}"  ><i class="fa fa-times"></i></a>
+																<a href="/delete?id={{.Id_user}}"  ><i class="fa fa-times"></i></a>
 															</button>
 														</div>
 													</td>

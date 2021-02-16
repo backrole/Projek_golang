@@ -132,7 +132,7 @@ func user(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(e)
 	}
 
-	selDB, er := db.Query("SELECT * FROM User ORDER BY id DESC")
+	selDB, er := db.Query("SELECT * FROM User ORDER BY id_user DESC")
 	if er != nil {
 		panic(er.Error())
 	}
@@ -165,8 +165,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	if e != nil {
 		log.Fatal(e)
 	}
-	emp := r.URL.Query().Get("id")
-	delForm, err := db.Prepare("DELETE FROM User WHERE id=?")
+	emp := r.URL.Query().Get("id_user")
+	delForm, err := db.Prepare("DELETE FROM User WHERE id_user=?")
 	if err != nil {
 		panic(err.Error())
 	}
