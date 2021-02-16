@@ -11,10 +11,22 @@ import (
 )
 
 type User struct {
-	Id       int
+	Id_user  int
 	Nama     string
 	Email    string
 	Password string
+}
+
+type Produk struct {
+	Id_produk      int
+	Id_user        int
+	Nama_produk    string
+	Kategori       string
+	Harga          int
+	Diskon         int
+	Potongan_harga int
+	Promosi        string
+	Deskripsi      string
 }
 
 func dbc() {
@@ -133,7 +145,7 @@ func user(w http.ResponseWriter, r *http.Request) {
 		if er != nil {
 			panic(er.Error())
 		}
-		emp.Id = id
+		emp.Id_user = id
 		emp.Nama = nama
 		emp.Email = email
 		emp.Password = password
